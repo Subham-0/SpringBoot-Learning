@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.subham.spring.entity.Student;
 import com.subham.spring.exception.StudentNotFoundException;
-import com.subham.spring.repo.StudentRepository;
+import com.subham.spring.repo.StudentCurdRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -20,7 +20,7 @@ import jakarta.transaction.Transactional;
 public class CurdRepositoryOpration {
 
 	@Autowired
-	StudentRepository repository;
+	StudentCurdRepository repository;
 
 	@PersistenceContext
 	EntityManager entityManager;
