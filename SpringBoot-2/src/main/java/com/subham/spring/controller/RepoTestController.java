@@ -39,7 +39,7 @@ public class RepoTestController implements CommandLineRunner {
 		// opration.testDeleteAll(); 			// Delete all students
 
 		// ======================
-		// Using JpaRepository (Derived Queries & Custom Queries)
+		// Using JpaRepository (Derived Queries & Custom Queries & Pagination)
 		// ======================
 		 opration2.findByName("Subham"); 				// Find by name
 		 opration2.findByAddress("BBSR"); 				// Find by address
@@ -77,6 +77,11 @@ public class RepoTestController implements CommandLineRunner {
 
 		// Custom query →Search by name using LIKE query
 		opration2.searchByName("%a%");
+		
+		
+		
+		// pagination
+		opration2.paggging1Test();
 
 	}
 
