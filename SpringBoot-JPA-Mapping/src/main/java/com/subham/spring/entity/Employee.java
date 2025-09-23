@@ -1,10 +1,15 @@
 package com.subham.spring.entity;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -23,6 +28,19 @@ public class Employee {
 	//employee(should concern about naming what you name in other class that going to mapped)
 	@OneToOne(mappedBy = "employee")
 	private Mobile mobile;
+
+	@OneToMany(mappedBy = "employee",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	private List<Address> address;
+	
+	
+
+	public List<Address> getAddress() {
+		return address;
+	}
+
+	public void setAddress(List<Address> address) {
+		this.address = address;
+	}
 
 	public int getId() {
 		return id;
