@@ -91,19 +91,23 @@ public class SpringBootJpaMappingApplication implements CommandLineRunner {
 		addressRepo.save(address1);
 		addressRepo.save(address2);
 		*/
-//		Employee e = empRepo.findById(6).get();
-//		System.out.println("Employee name : " + e.getEmpName());
-//		List<Address> addresses = e.getAddress();
-//		
-//		addresses.forEach((a)->{
-//			System.out.println("Address : "+a.getAddress()+" , "+a.getType());
-//		});
-//		
+		
+		/*
+		Employee e = empRepo.findById(6).get();
+		System.out.println("Employee name : " + e.getEmpName());
+		List<Address> addresses = e.getAddress();
+		
+		addresses.forEach((a)->{
+			System.out.println("Address : "+a.getAddress()+" , "+a.getType());
+		});
+	
 		Address address = addressRepo.findById(2).get();
 		System.out.println("Employee name : "+address.getEmployee().getEmpName());
 		System.out.println("Employee address : "+address.toString());
+		*/
 		
-//		
+		//many-to-many
+		
 
 	}
 
