@@ -10,11 +10,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.subham.spring.entity.Address;
+import com.subham.spring.entity.Category;
 import com.subham.spring.entity.Employee;
 import com.subham.spring.entity.Mobile;
+import com.subham.spring.entity.Product;
 import com.subham.spring.repository.AddressRepo;
+import com.subham.spring.repository.CategoryRepo;
 import com.subham.spring.repository.EmpRepo;
 import com.subham.spring.repository.MobileRepo;
+import com.subham.spring.repository.ProductRepo;
 
 @SpringBootApplication
 public class SpringBootJpaMappingApplication implements CommandLineRunner {
@@ -24,9 +28,15 @@ public class SpringBootJpaMappingApplication implements CommandLineRunner {
 
 	@Autowired
 	EmpRepo empRepo;
-	
+
 	@Autowired
 	AddressRepo addressRepo;
+	
+	@Autowired
+	CategoryRepo categoryRepo;
+	
+	@Autowired
+	ProductRepo productRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootJpaMappingApplication.class, args);
@@ -34,80 +44,96 @@ public class SpringBootJpaMappingApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		
-		
-		
-		//One-to-one
-		
-		/*
-		  Mobile mobile = new Mobile();
-		  Employee employee = new Employee();
-		
-		 employee.setEmpName("subham");
-		 
-		//we don't need to set mobile into employee because it mapped as we mention
-		//and as it mapped it will not create any column for that 
-		
-		mobile.setMobileName("Motorola");
-		mobile.setEmployee(employee);
-		
-		empRepo.save(employee);
-		mobilerepo.save(mobile);
-		
-		Employee e = empRepo.findById(5).get();
-		System.out.println("Employee Name "+e.getEmpName());
-		System.out.println("Employee Phno "+e.getMobile().getMobileName());
-				
-		Mobile m = mobilerepo.findById(9).get();
-		System.out.println("Employee Name "+m.getEmployee().getEmpName());
-		System.out.println("Employee Phno "+m.getMobileName());
-		
-		*/
-		
-		
-		//One-to-many and Many-to-one
-		/*
-		Employee employee = new Employee();
-		employee.setEmpName("Abhishek");
 
-		Address address1 = new Address();
-		address1.setType("home");
-		address1.setAddress("xyz,Bihar");
-		address1.setEmployee(employee);
-		
-		Address address2 = new Address();
-		address2.setType("Office");
-		address2.setAddress("xyz,Jharkhand");
-		address2.setEmployee(employee);
-		
-		List<Address> address = new ArrayList<>();
-		address.add(address1);
-		address.add(address2);
-		
-		employee.setAddress(address);
-		
-		
-		empRepo.save(employee);
-		addressRepo.save(address1);
-		addressRepo.save(address2);
-		*/
-		
+		// One-to-one
+
 		/*
-		Employee e = empRepo.findById(6).get();
-		System.out.println("Employee name : " + e.getEmpName());
-		List<Address> addresses = e.getAddress();
+		 * Mobile mobile = new Mobile(); Employee employee = new Employee();
+		 * 
+		 * employee.setEmpName("subham");
+		 * 
+		 * //we don't need to set mobile into employee because it mapped as we mention
+		 * //and as it mapped it will not create any column for that
+		 * 
+		 * mobile.setMobileName("Motorola"); mobile.setEmployee(employee);
+		 * 
+		 * empRepo.save(employee); mobilerepo.save(mobile);
+		 * 
+		 * Employee e = empRepo.findById(5).get();
+		 * System.out.println("Employee Name "+e.getEmpName());
+		 * System.out.println("Employee Phno "+e.getMobile().getMobileName());
+		 * 
+		 * Mobile m = mobilerepo.findById(9).get();
+		 * System.out.println("Employee Name "+m.getEmployee().getEmpName());
+		 * System.out.println("Employee Phno "+m.getMobileName());
+		 * 
+		 */
+
+		// One-to-many and Many-to-one
+		/*
+		 * Employee employee = new Employee(); employee.setEmpName("Abhishek");
+		 * 
+		 * Address address1 = new Address(); address1.setType("home");
+		 * address1.setAddress("xyz,Bihar"); address1.setEmployee(employee);
+		 * 
+		 * Address address2 = new Address(); address2.setType("Office");
+		 * address2.setAddress("xyz,Jharkhand"); address2.setEmployee(employee);
+		 * 
+		 * List<Address> address = new ArrayList<>(); address.add(address1);
+		 * address.add(address2);
+		 * 
+		 * employee.setAddress(address);
+		 * 
+		 * 
+		 * empRepo.save(employee); addressRepo.save(address1);
+		 * addressRepo.save(address2);
+		 */
+
+		/*
+		 * Employee e = empRepo.findById(6).get(); System.out.println("Employee name : "
+		 * + e.getEmpName()); List<Address> addresses = e.getAddress();
+		 * 
+		 * addresses.forEach((a)->{
+		 * System.out.println("Address : "+a.getAddress()+" , "+a.getType()); });
+		 * 
+		 * Address address = addressRepo.findById(2).get();
+		 * System.out.println("Employee name : "+address.getEmployee().getEmpName());
+		 * System.out.println("Employee address : "+address.toString());
+		 */
+
+		// many-to-many
+
+		Category ca1 = new Category();
+		ca1.setCategoryname("Electronics");
+		Category ca2 = new Category();
+		ca2.setCategoryname("Mobile");
+
+		Product p1 = new Product();
+		p1.setProductname("TV");
+		Product p2 = new Product();
+		p2.setProductname("Oneplus mobile");
+		Product p3 = new Product();
+		p3.setProductname("Iphone 14");
+
+		ca1.setProducts(new ArrayList<>(Arrays.asList(p1, p2, p3)));
+		ca2.setProducts(new ArrayList<>(Arrays.asList(p2, p3)));
+
+		p1.setCategories(new ArrayList<>(Arrays.asList(ca1)));
+		p2.setCategories(new ArrayList<>(Arrays.asList(ca1, ca2)));
+		p3.setCategories(new ArrayList<>(Arrays.asList(ca1, ca2)));
+
+		categoryRepo.save(ca1);
+		categoryRepo.save(ca2);
+		//we don't need to save product because of CascadeType.ALL (as we mention in entity class)
+		System.out.println("Save success");
 		
-		addresses.forEach((a)->{
-			System.out.println("Address : "+a.getAddress()+" , "+a.getType());
-		});
-	
-		Address address = addressRepo.findById(2).get();
-		System.out.println("Employee name : "+address.getEmployee().getEmpName());
-		System.out.println("Employee address : "+address.toString());
-		*/
-		
-		//many-to-many
-		
+//		Category category = categoryRepo.findById(2).get();
+//		System.out.println("Category name="+category.getCategoryname());
+//		category.getProducts().forEach(e -> System.out.println(e.getProductname()));
+//
+//		Product p = productRepo.findById(3).get();
+//		System.out.println("Product name=" + p.getProductname());
+//		p.getCategories().forEach(e -> System.out.println(e.getCategoryname()));
 
 	}
 
