@@ -28,4 +28,7 @@ public class StudentService {
 	public Page<Student> findAllStudentwithPage(int offset,int pagesize){
 		return repo.findAll(PageRequest.of(offset, pagesize));
 	}
+	public Page<Student> findAllStudentwithPageAndSorting(String field,int offset,int pagesize){
+		return repo.findAll(PageRequest.of(offset, pagesize).withSort(Sort.by(Direction.DESC,field)));
+	}
 }

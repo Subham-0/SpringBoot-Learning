@@ -41,8 +41,15 @@ public class StudentController {
 	}
 	
 	@GetMapping("/pagesorted/{offset}/{pagesize}")
-	public ResponseEntity<PageResponse> allSortStudentWithPage(@PathVariable int offset,@PathVariable int pagesize){
+	public ResponseEntity<PageResponse> allStudentWithPage(@PathVariable int offset,@PathVariable int pagesize){
 		Page<Student> pagination =  service.findAllStudentwithPage(offset,pagesize);
+		 PageResponse response = new PageResponse( pagination.getSize(),pagination.getContent());
+		    return ResponseEntity.ok(response);
+	}
+	
+	@GetMapping("/pagesorted/{field}/{offset}/{pagesize}")
+	public ResponseEntity<PageResponse> allSortStudentWithPage(@PathVariable String field,@PathVariable int offset,@PathVariable int pagesize){
+		Page<Student> pagination =  service.findAllStudentwithPageAndSorting(field,offset,pagesize);
 		 PageResponse response = new PageResponse( pagination.getSize(),pagination.getContent());
 		    return ResponseEntity.ok(response);
 	}
