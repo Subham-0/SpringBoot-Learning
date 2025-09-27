@@ -17,10 +17,12 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-//                .csrf(csrf->csrf.disable())
-                .csrf(Customizer.withDefaults())
-                .authorizeHttpRequests(request -> request.anyRequest().authenticated())
-                .formLogin(Customizer.withDefaults())
+                .csrf(csrf->csrf.disable())
+//                .csrf(Customizer.withDefaults())
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers("register","login").permitAll()
+                        .anyRequest().authenticated())
+//                .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults());
 
         return httpSecurity.build();
