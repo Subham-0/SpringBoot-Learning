@@ -28,10 +28,13 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user){
-        var u =  userRepository.findByUserName(user.getUserName());
-        if(!Objects.isNull(u))
-            return ResponseEntity.ok("success");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+    public String login(@RequestBody User user){
+
+         return userService.verify(user);
+
+//        var u =  userRepository.findByUserName(user.getUserName());
+//        if(!Objects.isNull(u))
+//            return ResponseEntity.ok("success");
+//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
     }
 }
