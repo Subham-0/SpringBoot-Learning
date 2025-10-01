@@ -12,12 +12,12 @@ public class HomeController {
 	}
 	
 
-	@GetMapping("/")
+	@GetMapping("/home")
 	public String homepage() {	
 		return "home";
 	}
 	
-	@GetMapping("/index")
+	@GetMapping("/")
 	public String indexPage() {
 		return "index";
 	}
@@ -27,4 +27,18 @@ public class HomeController {
 		return "about";
 	}
 
+	@GetMapping("/signin")
+	public String signin() {
+		return "login";
+	}
+
+	@GetMapping("/invalid")
+	public String invalid() {
+		return "error";
+	}
+
+	@GetMapping("/userlogout")
+	public String logout() {
+		return "logout";
+	}
 }

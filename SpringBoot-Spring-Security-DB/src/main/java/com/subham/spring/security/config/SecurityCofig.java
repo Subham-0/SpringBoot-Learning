@@ -35,9 +35,20 @@ public class SecurityCofig {
 
 	@Bean
 	SecurityFilterChain getFilterChain(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeHttpRequests().requestMatchers("/index").permitAll().anyRequest().authenticated()
-				.and().formLogin();
+		http.csrf().disable()
+		.authorizeHttpRequests().requestMatchers("/").permitAll()
+		.anyRequest().authenticated()
+				.and().formLogin().loginPage("/signin")
+				.loginProcessingUrl("/userlogin")
+				.defaultSuccessUrl("/about").permitAll()
+				//.failureUrl("/invalid")
+				.and()
+				.logout().logoutSuccessUrl("/userlogout")
+				
+				.permitAll();
+
 		return http.build();
+	
 	}
 
 }
