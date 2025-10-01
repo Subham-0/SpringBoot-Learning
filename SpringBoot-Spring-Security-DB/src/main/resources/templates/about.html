@@ -1,13 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	 th:replace="~{base::layout(~{::body})}">
+<head>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-<body>
-	<h1>about page</h1>
-	<a href="/logout">logout</a>
-</body>
+	<!-- inject navbar -->
+	<div th:replace="navbar :: navbarFragment"></div>
+
+	<!-- page content -->
+	<section class="container mt-4 position-relative">
+		<img src="/images/melanie-magdalena-KpBAYMNf9Tw-unsplash.jpg"
+			class="img-fluid rounded shadow">
+
+		<!-- Overlay text -->
+		<div
+			class="position-absolute top-50 start-50 translate-middle text-white text-center">
+			<h1 class="fw-bold display-4">Discover WearJoy</h1>
+			<p class="lead">Elevate your everyday look with timeless style ✨</p>
+			<a href="/user/profile" class="btn btn-light btn-lg mt-3">Explore
+				Collection</a>
+		</div>
+	</section>
+
+	<div th:replace="footer :: footerFragment"></div>
 </body>
 </html>

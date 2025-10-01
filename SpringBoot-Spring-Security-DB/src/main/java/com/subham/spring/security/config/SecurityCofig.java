@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -32,23 +33,49 @@ public class SecurityCofig {
 
 		return daoAuthenticationProvider;
 	}
+	
+	@Bean
+	AuthenticationSuccessHandler customSuccessHandler() {
+	    return (request, response, authentication) -> {
+	        var authorities = authentication.getAuthorities();
+
+	        if (authorities.stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+	            response.sendRedirect("/admin/dashboard"); // Admin dashboard
+	        } else {
+	            response.sendRedirect("/user/profile"); // User profile
+	        }
+	    };
+	}
+
 
 	@Bean
 	SecurityFilterChain getFilterChain(HttpSecurity http) throws Exception {
-		http.csrf().disable()
-		.authorizeHttpRequests().requestMatchers("/").permitAll()
-		.anyRequest().authenticated()
-				.and().formLogin().loginPage("/signin")
-				.loginProcessingUrl("/userlogin")
-				.defaultSuccessUrl("/about").permitAll()
-				//.failureUrl("/invalid")
-				.and()
-				.logout().logoutSuccessUrl("/userlogout")
-				
-				.permitAll();
+	    http.csrf().disable()
+	        .authorizeHttpRequests()
+	            // Public endpoints
+	            .requestMatchers("/", "/registration", "/saveEmployee", "/signin").permitAll()
 
-		return http.build();
-	
+	            // Admin can access everything + admin pages
+	            .requestMatchers("/admin/**").hasRole("ADMIN")
+	            // User pages
+	            .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN") 
+
+	            // Any other request
+	            .anyRequest().authenticated()
+	        .and()
+	            .formLogin()
+	                .loginPage("/signin")
+	                .loginProcessingUrl("/userlogin")
+	                .successHandler(customSuccessHandler()) // ✅ role-based redirect
+	                .permitAll()
+	        .and()
+	            .logout()
+	                .logoutUrl("/logout")
+	                .logoutSuccessUrl("/signin?logout")
+	                .permitAll();
+
+	    return http.build();
 	}
+
 
 }

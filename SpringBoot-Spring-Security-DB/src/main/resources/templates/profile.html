@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::body})}">
+<head>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Profile page</h1>
+	<!-- inject navbar -->
+	<div th:replace="navbar :: navbarFragment"></div>
+
+	<main class="container my-5">
+		<div class="row justify-content-center">
+			<div class="col-md-8 col-lg-6">
+				<div class="card shadow-lg border-0 rounded-4">
+					<div class="card-body text-center p-5">
+						<img src="/images/logo.jpg" class="rounded-circle mb-4 shadow"
+							alt="Profile Picture" width="120" height="120">
+
+						<h2 class="fw-bold">Welcome Back👋</h2>
+						<p class="text-muted">This is your profile page. You can
+							manage your account and settings here.</p>
+
+						<div class="d-grid gap-3 mt-4">
+							<a href="/user/about" class="btn btn-primary btn-lg">View
+								About</a> <a href="/logout" class="btn btn-outline-danger btn-lg">Logout</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<div th:replace="footer :: footerFragment"></div>
 </body>
 </html>

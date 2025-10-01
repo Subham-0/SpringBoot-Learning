@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::body})}">
+<head>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>home page</h1>
+	<!-- inject navbar -->
+	<div th:replace="navbar :: navbarFragment"></div>
+
+	<!-- page content -->
+	<section class="container mt-4 position-relative">
+		<img src="/images/nasa-V4ZksNimxLk-unsplash.jpg" class="img-fluid"
+			alt="NASA image">
+
+		<!-- Overlay text -->
+		<div
+			class="position-absolute top-50 start-50 translate-middle text-white text-center">
+			<h1>Welcome to WearJoy</h1>
+			<p>Style that speaks for you</p>
+			<a href="/user/about" class="btn btn-primary">Explore Now</a>
+		</div>
+	</section>
+	<div th:replace="footer :: footerFragment"></div>
 </body>
 </html>

@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+ th:replace="base :: layout(~{::body})">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
+
 	<center>
 		<h1>Sucessfully logout !!</h1>
+		<a href="/login">login again</a>
 	</center>
 </body>
 </html>
