@@ -1,9 +1,7 @@
 package com.subham.SpringSecurity_2.security;
 
 import com.subham.SpringSecurity_2.model.UserEntity;
-import com.subham.SpringSecurity_2.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
