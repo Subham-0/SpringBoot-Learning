@@ -3,6 +3,9 @@ package com.subham.SpringSecurity_2.controller;
 import com.subham.SpringSecurity_2.model.UserEntity;
 import com.subham.SpringSecurity_2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +18,15 @@ public class UserController {
     @Autowired
     UserService userService;
 
+
     @PostMapping("/register")
-    public UserEntity register(@RequestBody UserEntity user){
-       return userService.register(user);
+    public UserEntity register(@RequestBody UserEntity user) {
+        return userService.register(user);
+    }
+
+    @PostMapping("/login")
+    public String  login(@RequestBody UserEntity user) {
+        return userService.verify(user);
     }
 
 }
