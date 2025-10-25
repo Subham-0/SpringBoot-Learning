@@ -18,7 +18,10 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    AuthenticationManager authManager;
+    private AuthenticationManager authManager;
+
+    @Autowired
+    private JWTService jwtService;
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
 
@@ -31,7 +34,7 @@ public class UserService {
         Authentication authentication =
                 authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         if (authentication.isAuthenticated()) {
-            return "loggedIn successful";
+            return jwtService.generateToken(user.getUsername());
         }
         return "bad credential";
     }
